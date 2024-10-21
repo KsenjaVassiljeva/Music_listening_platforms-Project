@@ -17,4 +17,5 @@
 + Express
 + Sequalize
 
-![Screnshot] (https://github.com/KsenjaVassiljeva/Music_listening_platforms-Project/blob/main/ER%20Project.png)
+###ER:
+!{Screnshot} (https://github.com/KsenjaVassiljeva/Music_listening_platforms-Project/blob/main/ER%20Project.png)
