@@ -7,7 +7,14 @@ const Genres = require('../models/genres');
 const Playlists = require('../models/playlists');
 const Tracks = require('../models/tracks');
 const UserInteractions = require('../models/userInteractions');
-const PlaylistTracks = require('../models/playlistTracks');
+
+
+const PlaylistTrack = db.define('PlaylistTrack', {}, { timestamps: false });
+
+// Define the many-to-many relationship
+Playlists.belongsToMany(Tracks, { through: PlaylistTrack, as: 'tracks' });
+Tracks.belongsToMany(Playlists, { through: PlaylistTrack, as: 'playlists' });
+
 
 // Синхронизация базы данных
 async function syncDatabase() {
