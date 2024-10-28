@@ -1,5 +1,5 @@
+const db = require('../config/database.js');
 const { DataTypes } = require('sequelize');
-const db = require('../config/database');
 const bcrypt = require('bcrypt');
 
 const Artist = db.define('artist', {

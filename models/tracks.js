@@ -1,6 +1,8 @@
 const db = require('../config/database.js');
 const { DataTypes } = require('sequelize');
-const bcrypt = require('bcrypt');
+// No need to import bcrypt for file path
+const Albums = require('./albums'); // Import the Albums model
+const Genres = require('./genres');   // Import the Genres model
 
 const Tracks = db.define('tracks', {
     title: {
@@ -11,7 +13,7 @@ const Tracks = db.define('tracks', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'albums',
+            model: Albums, // Use the Albums model
             key: 'id'
         }
     },
@@ -19,12 +21,12 @@ const Tracks = db.define('tracks', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'genres',
+            model: Genres, // Use the Genres model
             key: 'id'
         }
     },
     duration: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER, // Duration can be in seconds
         allowNull: false
     },
     filePath: {
@@ -34,18 +36,7 @@ const Tracks = db.define('tracks', {
 }, {
     tableName: 'tracks',
     timestamps: true,
-    hooks: {
-        beforeCreate: async (track) => {
-            if (track.filePath) {
-                track.filePath = await bcrypt.hash(track.filePath, 10);
-            }
-        },
-        beforeUpdate: async (track) => {
-            if (track.filePath) {
-                track.filePath = await bcrypt.hash(track.filePath, 10);
-            }
-        }
-    }
+    // Removed the hashing hooks for filePath
 });
 
 module.exports = Tracks;

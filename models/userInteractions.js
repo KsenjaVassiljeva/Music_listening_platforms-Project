@@ -1,21 +1,22 @@
 const db = require('../config/database.js');
 const { DataTypes } = require('sequelize');
-const bcrypt = require('bcrypt');
+const User = require('./user.js');
+const Tracks = require('./tracks.js');
 
 const UserInteractions = db.define('userInteractions', {
     userId: {
-        type: DataTypes.BIGINT,
+        type: DataTypes.BIGINT, // Ensure this matches the type in the User model
         allowNull: false,
         references: {
-            model: 'users',
+            model: User, // Reference the User model directly
             key: 'id'
         }
     },
-    trackId: {
+    tracksId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'tracks',
+            model: Tracks, // Reference the Tracks model directly
             key: 'id'
         }
     },
@@ -32,13 +33,15 @@ const UserInteractions = db.define('userInteractions', {
     timestamps: true,
     hooks: {
         beforeCreate: async (interaction) => {
-            if (interaction.trackId) {
-                interaction.trackId = await bcrypt.hash(interaction.trackId.toString(), 10);
+            // Check if you really need to hash tracksId
+            if (interaction.tracksId) {
+                interaction.tracksId = await bcrypt.hash(interaction.tracksId.toString(), 10);
             }
         },
         beforeUpdate: async (interaction) => {
-            if (interaction.trackId) {
-                interaction.trackId = await bcrypt.hash(interaction.trackId.toString(), 10);
+            // Check if you really need to hash tracksId
+            if (interaction.tracksId) {
+                interaction.tracksId = await bcrypt.hash(interaction.tracksId.toString(), 10);
             }
         }
     }

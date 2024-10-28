@@ -1,9 +1,13 @@
+// In user.js
 const db = require('../config/database.js');
 const { DataTypes } = require('sequelize');
-const bcrypt = require('bcrypt');
 
-
-const User = db.define('user', {
+const User = db.define('users', {
+    id: {
+        type: DataTypes.BIGINT, // Ensure this matches the userId type in playlists
+        autoIncrement: true,
+        primaryKey: true,
+    },
     name: {
         type: DataTypes.STRING(30),
         allowNull: false
@@ -12,29 +16,14 @@ const User = db.define('user', {
         type: DataTypes.STRING(100),
         allowNull: false,
         unique: true,
-        validate: {
-            isEmail: true
-        }
     },
     password: {
         type: DataTypes.STRING(255),
-        allowNull: false
+        allowNull: false,
     }
 }, {
     tableName: 'users',
-    timestamps: false,
-    hooks: {
-        beforeCreate: async (user) => {
-            const salt = await bcrypt.genSalt(10);
-            user.password = await bcrypt.hash(user.password, salt);
-        },
-        beforeUpdate: async (user) => {
-            if (user.changed('password')) {
-                const salt = await bcrypt.genSalt(10);
-                user.password = await bcrypt.hash(user.password, salt);
-            }
-        }
-    }
+    timestamps: true,
 });
 
 module.exports = User;

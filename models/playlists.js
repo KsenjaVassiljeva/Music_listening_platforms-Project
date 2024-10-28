@@ -1,6 +1,7 @@
 const db = require('../config/database.js');
 const { DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
+const User = require('./user'); // Import the User model
 
 const Playlists = db.define('playlists', {
     name: {
@@ -8,10 +9,10 @@ const Playlists = db.define('playlists', {
         allowNull: false
     },
     userId: {
-        type: DataTypes.BIGINT,
+        type: DataTypes.BIGINT, // Ensure this matches the type in the User model
         allowNull: false,
         references: {
-            model: 'users',
+            model: User, // Reference the User model directly
             key: 'id'
         }
     }
@@ -21,11 +22,13 @@ const Playlists = db.define('playlists', {
     hooks: {
         beforeCreate: async (playlist) => {
             if (playlist.name) {
+                // Hash the playlist name
                 playlist.name = await bcrypt.hash(playlist.name, 10);
             }
         },
         beforeUpdate: async (playlist) => {
             if (playlist.name) {
+                // Hash the updated playlist name
                 playlist.name = await bcrypt.hash(playlist.name, 10);
             }
         }

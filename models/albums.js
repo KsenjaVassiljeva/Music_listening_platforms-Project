@@ -2,28 +2,50 @@ const db = require('../config/database.js');
 const { DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 
-const Artist = db.define('artists', { // Убедитесь, что это 'artists'
+const Albums = db.define('albums', {
     id: {
-        type: DataTypes.BIGINT.UNSIGNED,
+        type: DataTypes.INTEGER.UNSIGNED,
         autoIncrement: true,
         primaryKey: true,
     },
-    name: {
+    title: {
         type: DataTypes.STRING(255),
         allowNull: false,
     },
-    bio: {
-        type: DataTypes.TEXT,
+    artistId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
     },
-    password: {
+    releaseDate: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    },
+    coverImage: {
         type: DataTypes.STRING(255),
         allowNull: false,
-    }
+    },
+    createdAt: {
+        type: DataTypes.DATE,  // Changed from TIMESTAMP to DATE
+        allowNull: false,
+        defaultValue: DataTypes.NOW, // Set default value to now
+    },
 }, {
-    tableName: 'artists', // Убедитесь, что это 'artists'
+    tableName: 'Albums',
     timestamps: false,
+    hooks: {
+        beforeCreate: async (album) => {
+            // Хеширование названия альбома
+            const salt = await bcrypt.genSalt(10);
+            album.title = await bcrypt.hash(album.title, salt);
+        },
+        beforeUpdate: async (album) => {
+            // Хеширование названия альбома, если оно было изменено
+            if (album.changed('title')) {
+                const salt = await bcrypt.genSalt(10);
+                album.title = await bcrypt.hash(album.title, salt);
+            }
+        }
+    }
 });
 
-module.exports = Artist;
-
+module.exports = Albums;
