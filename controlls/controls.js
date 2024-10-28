@@ -1,21 +1,25 @@
 const Albums = require('../models/albums');
 const Genres = require('../models/genres');
-const User = require('../models/user');
-const Artist = require('../models/artist');
+const User = require('../models/user'); // Keep this if needed elsewhere
+const Artist = require('../models/artist'); // Keep this if needed elsewhere
 const Playlists = require('../models/playlists');
 const sequelize = require('../config/database');
 const Tracks = require('../models/tracks');
 
 // Define the join table for Playlist and Track
-const PlaylistTracks = sequelize.define('PlaylistTracks', {}, { timestamps: false });
+const PlaylistTrack = sequelize.define('PlaylistTrack', {}, { timestamps: false });
 
 // Define the many-to-many relationship
-Playlists.belongsToMany(Tracks, { through: PlaylistTracks, as: 'tracks' });
-Tracks.belongsToMany(Playlists, { through: PlaylistTracks, as: 'playlists' }); // Optional: Define the reverse relationship
+Playlists.belongsToMany(Tracks, { through: PlaylistTrack, as: 'tracks' });
+Tracks.belongsToMany(Playlists, { through: PlaylistTrack, as: 'playlists' }); // Define the reverse relationship
 
-// Export the models
+// Export the models in a single object
 module.exports = {
+    Albums,
+    Genres,
+    User,
+    Artist,
     Playlists,
     Tracks,
-    PlaylistTracks // Export PlaylistTracks if needed elsewhere
+    PlaylistTrack // Export PlaylistTrack if needed elsewhere
 };

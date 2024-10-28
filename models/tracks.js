@@ -1,42 +1,58 @@
 const db = require('../config/database.js');
 const { DataTypes } = require('sequelize');
-// No need to import bcrypt for file path
-const Albums = require('./albums'); // Import the Albums model
-const Genres = require('./genres');   // Import the Genres model
 
 const Tracks = db.define('tracks', {
+    id: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        autoIncrement: true,
+        primaryKey: true,
+    },
     title: {
         type: DataTypes.STRING(255),
-        allowNull: false
+        allowNull: false,
     },
     albumId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
         references: {
-            model: Albums, // Use the Albums model
+            model: 'albums', // Ensure this matches the exact name in the database
             key: 'id'
         }
     },
     genreId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
         references: {
-            model: Genres, // Use the Genres model
+            model: 'genres', // Ensure this matches the exact name in the database
             key: 'id'
         }
     },
     duration: {
-        type: DataTypes.INTEGER, // Duration can be in seconds
-        allowNull: false
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
+        validate: {
+            min: 1
+        }
     },
     filePath: {
         type: DataTypes.STRING(255),
-        allowNull: false
-    }
+        allowNull: false,
+    },
+    createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+    },
 }, {
     tableName: 'tracks',
     timestamps: true,
-    // Removed the hashing hooks for filePath
 });
 
+// Export the model
 module.exports = Tracks;
+

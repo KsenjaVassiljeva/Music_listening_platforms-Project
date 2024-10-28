@@ -1,28 +1,18 @@
 const db = require('../config/database.js');
 const { DataTypes } = require('sequelize');
-const bcrypt = require('bcrypt');
 
-const Genres = db.define('genres', {
+const Genre = db.define('Genre', {
     name: {
         type: DataTypes.STRING(255),
-        allowNull: false
+        allowNull: false,
+        validate: {
+            len: [1, 255], // Ensure the name is not empty and does not exceed 255 characters
+        }
     }
 }, {
     tableName: 'genres',
-    timestamps: false,
-    hooks: {
-        beforeCreate: async (genre) => {
-            if (genre.name) {
-                genre.name = await bcrypt.hash(genre.name, 10);
-            }
-        },
-        beforeUpdate: async (genre) => {
-            // Hash the name before updating the record
-            if (genre.name) {
-                genre.name = await bcrypt.hash(genre.name, 10);
-            }
-        }
-    }
+    timestamps: false, // No timestamps needed for this model
 });
 
-module.exports = Genres;
+// Export the model
+module.exports = Genre;

@@ -1,6 +1,6 @@
 const db = require('../config/database.js');
 const { DataTypes } = require('sequelize');
-const bcrypt = require('bcrypt');
+const Artist = require('./artist');
 
 const Albums = db.define('albums', {
     id: {
@@ -13,8 +13,12 @@ const Albums = db.define('albums', {
         allowNull: false,
     },
     artistId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT.UNSIGNED, // Ensure this matches the type in the Artist model
         allowNull: false,
+        references: {
+            model: Artist,
+            key: 'id'
+        }
     },
     releaseDate: {
         type: DataTypes.DATE,
@@ -25,27 +29,14 @@ const Albums = db.define('albums', {
         allowNull: false,
     },
     createdAt: {
-        type: DataTypes.DATE,  // Changed from TIMESTAMP to DATE
+        type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: DataTypes.NOW, // Set default value to now
+        defaultValue: DataTypes.NOW,
     },
 }, {
-    tableName: 'Albums',
+    tableName: 'albums', // Use lowercase for table name
     timestamps: false,
-    hooks: {
-        beforeCreate: async (album) => {
-            // Хеширование названия альбома
-            const salt = await bcrypt.genSalt(10);
-            album.title = await bcrypt.hash(album.title, salt);
-        },
-        beforeUpdate: async (album) => {
-            // Хеширование названия альбома, если оно было изменено
-            if (album.changed('title')) {
-                const salt = await bcrypt.genSalt(10);
-                album.title = await bcrypt.hash(album.title, salt);
-            }
-        }
-    }
+    // Remove hooks if hashing is not needed
 });
 
 module.exports = Albums;

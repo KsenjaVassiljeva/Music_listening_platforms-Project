@@ -1,12 +1,14 @@
 const db = require('../config/database.js');
 const { DataTypes } = require('sequelize');
-const bcrypt = require('bcrypt');
 const User = require('./user'); // Import the User model
 
-const Playlists = db.define('playlists', {
+const Playlist = db.define('Playlist', {
     name: {
         type: DataTypes.STRING(255),
-        allowNull: false
+        allowNull: false,
+        validate: {
+            len: [1, 255], // Ensure the name is not empty and does not exceed 255 characters
+        }
     },
     userId: {
         type: DataTypes.BIGINT, // Ensure this matches the type in the User model
@@ -19,20 +21,8 @@ const Playlists = db.define('playlists', {
 }, {
     tableName: 'playlists',
     timestamps: true,
-    hooks: {
-        beforeCreate: async (playlist) => {
-            if (playlist.name) {
-                // Hash the playlist name
-                playlist.name = await bcrypt.hash(playlist.name, 10);
-            }
-        },
-        beforeUpdate: async (playlist) => {
-            if (playlist.name) {
-                // Hash the updated playlist name
-                playlist.name = await bcrypt.hash(playlist.name, 10);
-            }
-        }
-    }
+    // No need for hooks to hash the playlist name
 });
 
-module.exports = Playlists;
+// Export the model
+module.exports = Playlist;

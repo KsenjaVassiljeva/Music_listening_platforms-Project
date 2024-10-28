@@ -11,18 +11,22 @@ const Artist = db.define('artist', {
     name: {
         type: DataTypes.STRING(255),
         allowNull: false,
+        unique: true, // Ensures that the artist name is unique
     },
     bio: {
         type: DataTypes.TEXT,
         allowNull: false,
+        validate: {
+            len: [10, 1000], // Example: bio must be between 10 and 1000 characters
+        },
     },
-    password: { // Поле для хранения хешированного пароля
+    password: { // Field for storing hashed password
         type: DataTypes.STRING(255),
         allowNull: false,
     }
 }, {
     tableName: 'Artist',
-    timestamps: false,
+    timestamps: true, // Enable timestamps
     hooks: {
         beforeCreate: async (artist) => {
             const salt = await bcrypt.genSalt(10);

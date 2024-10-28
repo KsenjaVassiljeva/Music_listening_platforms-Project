@@ -7,7 +7,7 @@ const Genres = require('../models/genres');
 const Playlists = require('../models/playlists');
 const Tracks = require('../models/tracks');
 const UserInteractions = require('../models/userInteractions');
-const PlaylistTracks = require('../controlls/controls.js');
+const PlaylistTracks = require('../models/playlistTracks');
 
 // Синхронизация базы данных
 async function syncDatabase() {
