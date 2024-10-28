@@ -1,0 +1,93 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f3f4f6;
+    color: #333;
+}
+
+header {
+    background-color: #4a90e2;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+input[type="text"] {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+main {
+    padding: 20px;
+}
+
+.popular-tracks {
+    margin-bottom: 40px;
+}
+
+.track-card {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 10px;
+    transition: transform 0.2s ease; /* Анимация увеличения */
+}
+
+.track-card:hover {
+    transform: scale(1.05); /* Увеличение при наведении */
+}
+
+.track-card img {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+}
+
+.track-info {
+    margin-left: 10px;
+}
+
+.player {
+    background-color: #4a90e2;
+    padding: 20px;
+    border-radius: 8px;
+    color: white;
+}
+
+.player-controls {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: transform 0.2s ease; /* Анимация кнопок */
+}
+
+button:hover {
+    transform: scale(1.2); /* Увеличение кнопок при наведении */
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #4a90e2;
+    color: white;
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Музыкальная Платформа</title>
+</head>
+<body>
+    <header>
+        <div class="logo">Музыка</div>
+        <input type="text" placeholder="Поиск...">
+    </header>
+
+    <main>
+        <section class="popular-tracks">
+            <h2>Популярные треки</h2>
+            <div class="track-card">
+                <img src="album-cover1.jpg" alt="Обложка альбома">
+                <div class="track-info">
+                    <h3>Название трека</h3>
+                    <p>Исполнитель</p>
+                </div>
+            </div>
+            <div class="track-card">
+                <img src="album-cover2.jpg" alt="Обложка альбома">
+                <div class="track-info">
+                    <h3>Название трека</h3>
+                    <p>Исполнитель</p>
+                </div>
+            </div>
+            <!-- Добавьте больше карточек треков здесь -->
+        </section>
+
+        <section class="player">
+            <h2>Сейчас играется</h2>
+            <div class="player-controls">
+                <button>⏮️</button>
+                <button>▶️</button>
+                <button>⏭️</button>
+            </div>
+            <div class="track-playing">
+                <h3>Название трека</h3>
+                <p>Исполнитель</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Музыкальная Платформа</p>
+    </footer>
+
+    <script>
+        // Анимация при загрузке
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = 0;
+            section.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                section.style.opacity = 1;
+                section.style.transform = 'translateY(0)';
+                section.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
