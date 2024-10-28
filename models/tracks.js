@@ -1,58 +1,52 @@
-const db = require('../config/database.js');
 const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database.js'); // Adjust this path if necessary
 
-const Tracks = db.define('tracks', {
+const Tracks = sequelize.define('tracks', {
     id: {
         type: DataTypes.INTEGER.UNSIGNED,
         autoIncrement: true,
         primaryKey: true,
     },
     title: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.STRING,
         allowNull: false,
     },
     albumId: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
         references: {
-            model: 'albums', // Ensure this matches the exact name in the database
-            key: 'id'
-        }
+            model: 'albums', // Ensure the table name matches
+            key: 'id',
+        },
     },
     genreId: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
         references: {
-            model: 'genres', // Ensure this matches the exact name in the database
-            key: 'id'
-        }
+            model: 'genres', // Ensure the table name matches
+            key: 'id',
+        },
     },
     duration: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
-        validate: {
-            min: 1
-        }
     },
     filePath: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.STRING,
         allowNull: false,
     },
     createdAt: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: DataTypes.NOW,
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
     },
     updatedAt: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: DataTypes.NOW,
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
     },
 }, {
     tableName: 'tracks',
-    timestamps: true,
 });
 
-// Export the model
 module.exports = Tracks;
-

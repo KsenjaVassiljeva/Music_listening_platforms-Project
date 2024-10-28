@@ -1,18 +1,28 @@
-const db = require('../config/database.js');
 const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database.js'); // Adjust this path if necessary
 
-const Genre = db.define('Genre', {
+const Genres = sequelize.define('genres', {
+    id: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        autoIncrement: true,
+        primaryKey: true,
+    },
     name: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-            len: [1, 255], // Ensure the name is not empty and does not exceed 255 characters
-        }
-    }
+    },
+    createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+    },
+    updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
+    },
 }, {
     tableName: 'genres',
-    timestamps: false, // No timestamps needed for this model
 });
 
-// Export the model
-module.exports = Genre;
+module.exports = Genres;

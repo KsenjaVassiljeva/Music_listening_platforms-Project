@@ -1,42 +1,44 @@
-const db = require('../config/database.js');
 const { DataTypes } = require('sequelize');
-const Artist = require('./artist');
+const sequelize = require('../config/database.js'); // Adjust this path if necessary
 
-const Albums = db.define('albums', {
+const Albums = sequelize.define('albums', {
     id: {
         type: DataTypes.INTEGER.UNSIGNED,
         autoIncrement: true,
         primaryKey: true,
     },
     title: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.STRING,
         allowNull: false,
     },
     artistId: {
-        type: DataTypes.BIGINT.UNSIGNED, // Ensure this matches the type in the Artist model
+        type: DataTypes.BIGINT.UNSIGNED,
         allowNull: false,
         references: {
-            model: Artist,
-            key: 'id'
-        }
+            model: 'Artist', // Ensure the case matches exactly
+            key: 'id',
+        },
     },
     releaseDate: {
         type: DataTypes.DATE,
         allowNull: false,
     },
     coverImage: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.STRING,
         allowNull: false,
     },
     createdAt: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: DataTypes.NOW,
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+    },
+    updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
     },
 }, {
-    tableName: 'albums', // Use lowercase for table name
-    timestamps: false,
-    // Remove hooks if hashing is not needed
+    tableName: 'albums',
 });
 
 module.exports = Albums;
