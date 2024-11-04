@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Музыкальная Платформа</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <a class="logo" href="index.html">Музыкальная Платформа</a>
+        <nav>
+            <ul>
+                <li><a href="login.html">Вход</a></li>
+                <li><a href="registration.html">Регистрация</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="featured">
+            <h2>Популярные Альбомы</h2>
+            <div class="album-container">
+                <div class="album">
+                    <img src="album1.jpg" alt="Название Альбома 1 от Исполнителя 1">
+                    <h3>Название Альбома 1</h3>
+                    <p>Исполнитель 1</p>
+                </div>
+                <div class="album">
+                    <img src="album2.jpg" alt="Название Альбома 2 от Исполнителя 2">
+                    <h3>Название Альбома 2</h3>
+                    <p>Исполнитель 2</p>
+                </div>
+                <div class="album">
+                    <img src="album3.jpg" alt="Название Альбома 3 от Исполнителя 3">
+                    <h3>Название Альбома 3</h3>
+                    <p>Исполнитель 3</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const albums = document.querySelectorAll('.album');
+            albums.forEach((album, index) => {
+                setTimeout(() => {
+                    album.classList.add('show');
+                }, index * 200); // Задержка 200мс для каждого альбома
+            });
+        });
+    </script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", async function() {
+            const albumContainer = document.querySelector('.album-container');
+    
+            try {
+                const response = await fetch('/albums'); // Fetch albums from the server
+                const albums = await response.json();
+    
+                albums.forEach(album => {
+                    const albumElement = document.createElement('div');
+                    albumElement.className = 'album';
+                    albumElement.innerHTML = `
+                    <img src="${album.coverImage}" alt="${album.title}">
+                    <h3>${album.title}</h3>
+                    <p>${album.artist.name}</p> <!-- Access the artist's name here -->
+                `;
+                    albumContainer.appendChild(albumElement);
+                });
+            } catch (error) {
+                console.error('Error fetching albums:', error);
+            }
+        });
+    </script>
+    
+
+    <footer>
+        <p>© 2024 Музыкальная Платформа. Все права защищены.</p>
+    </footer>
+</body>
+</html>
