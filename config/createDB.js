@@ -1,4 +1,5 @@
 const db = require('./database.js');
+const bcrypt = require('bcrypt');
 
 const User = require('../models/user');
 const Artists = require('../models/artist');
@@ -43,6 +44,26 @@ async function syncDatabase() {
     try {
         await db.sync({ force: true });
         console.log('Database synchronized successfully!');
+
+        // Create an admin user
+        const adminEmail = 'admin@example.com'; // Change to desired admin email
+        const adminPassword = '11112'; // Change to desired admin password
+        const adminName = 'Admin Name'; // Change to desired admin name
+
+        const existingAdmin = await User.findOne({ where: { email: adminEmail } });
+
+        if (!existingAdmin) {
+            const hashedPassword = await bcrypt.hash(adminPassword, 10); // Hash the password
+            const adminUser = await User.create({
+                name: adminName,
+                email: adminEmail,
+                password: hashedPassword,
+                role: 'admin', // Specify the role for the admin
+            });
+            console.log('Admin user created successfully:', adminUser);
+        } else {
+            console.log('Admin user already exists.');
+        }
     } catch (error) {
         console.error('Error synchronizing the database:', error);
     }

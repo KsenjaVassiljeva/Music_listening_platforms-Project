@@ -37,7 +37,7 @@ const Tracks = sequelize.define('tracks', {
     }
 }, {
     tableName: 'tracks',
-    timestamps: true, // This automatically adds createdAt and updatedAt
+    timestamps: true,
 });
 
 
