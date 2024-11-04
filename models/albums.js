@@ -15,7 +15,7 @@ const Albums = sequelize.define('albums', {
         type: DataTypes.BIGINT.UNSIGNED,
         allowNull: false,
         references: {
-            model: 'Artist', // Ensure the case matches exactly
+            model: 'Artist',
             key: 'id',
         },
     },

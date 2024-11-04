@@ -3,64 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
     <title>Музыкальная Платформа</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <div class="logo">Музыка</div>
-        <input type="text" placeholder="Поиск...">
+        <a class="logo" href="index.html">Музыкальная Платформа</a>
+        <nav>
+            <ul>
+                <li><a href="login.html">Вход</a></li>
+                <li><a href="registration.html">Регистрация</a></li>
+            </ul>
+        </nav>
     </header>
 
     <main>
-        <section class="popular-tracks">
-            <h2>Популярные треки</h2>
-            <div class="track-card">
-                <img src="album-cover1.jpg" alt="Обложка альбома">
-                <div class="track-info">
-                    <h3>Название трека</h3>
-                    <p>Исполнитель</p>
+        <section class="featured">
+            <h2>Популярные Альбомы</h2>
+            <div class="album-container">
+                <div class="album">
+                    <img src="album1.jpg" alt="Название Альбома 1 от Исполнителя 1">
+                    <h3>Название Альбома 1</h3>
+                    <p>Исполнитель 1</p>
                 </div>
-            </div>
-            <div class="track-card">
-                <img src="album-cover2.jpg" alt="Обложка альбома">
-                <div class="track-info">
-                    <h3>Название трека</h3>
-                    <p>Исполнитель</p>
+                <div class="album">
+                    <img src="album2.jpg" alt="Название Альбома 2 от Исполнителя 2">
+                    <h3>Название Альбома 2</h3>
+                    <p>Исполнитель 2</p>
                 </div>
-            </div>
-            <!-- Добавьте больше карточек треков здесь -->
-        </section>
-
-        <section class="player">
-            <h2>Сейчас играется</h2>
-            <div class="player-controls">
-                <button>⏮️</button>
-                <button>▶️</button>
-                <button>⏭️</button>
-            </div>
-            <div class="track-playing">
-                <h3>Название трека</h3>
-                <p>Исполнитель</p>
+                <div class="album">
+                    <img src="album3.jpg" alt="Название Альбома 3 от Исполнителя 3">
+                    <h3>Название Альбома 3</h3>
+                    <p>Исполнитель 3</p>
+                </div>
             </div>
         </section>
     </main>
 
-    <footer>
-        <p>&copy; 2024 Музыкальная Платформа</p>
-    </footer>
-
     <script>
-        // Анимация при загрузке
-        document.querySelectorAll('section').forEach(section => {
-            section.style.opacity = 0;
-            section.style.transform = 'translateY(20px)';
-            setTimeout(() => {
-                section.style.opacity = 1;
-                section.style.transform = 'translateY(0)';
-                section.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            }, 100);
+        document.addEventListener("DOMContentLoaded", function() {
+            const albums = document.querySelectorAll('.album');
+            albums.forEach((album, index) => {
+                setTimeout(() => {
+                    album.classList.add('show');
+                }, index * 200); // Задержка 200мс для каждого альбома
+            });
         });
-    </script>
+    </script>    
+
+    <footer>
+        <p>© 2024 Музыкальная Платформа. Все права защищены.</p>
+    </footer>
 </body>
 </html>

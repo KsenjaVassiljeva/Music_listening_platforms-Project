@@ -34,19 +34,11 @@ const Tracks = sequelize.define('tracks', {
     filePath: {
         type: DataTypes.STRING,
         allowNull: false,
-    },
-    createdAt: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
-    },
-    updatedAt: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
-    },
+    }
 }, {
     tableName: 'tracks',
+    timestamps: true, // This automatically adds createdAt and updatedAt
 });
+
 
 module.exports = Tracks;

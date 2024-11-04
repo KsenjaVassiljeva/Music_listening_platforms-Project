@@ -2,9 +2,9 @@ const db = require('../config/database.js');
 const { DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 
-const User = db.define('User', {
+const User = db.define('user', {
     id: {
-        type: DataTypes.BIGINT, // Ensure this matches the userId type in playlists
+        type: DataTypes.BIGINT,
         autoIncrement: true,
         primaryKey: true,
     },
@@ -17,7 +17,7 @@ const User = db.define('User', {
         allowNull: false,
         unique: true,
         validate: {
-            isEmail: true, // Validates that the value is an email
+            isEmail: true,
         }
     },
     password: {
@@ -39,6 +39,11 @@ const User = db.define('User', {
 // Instance method to verify password
 User.prototype.verifyPassword = async function(password) {
     return await bcrypt.compare(password, this.password);
+};
+
+// Optional: Add a class method to find user by email
+User.findByEmail = async function(email) {
+    return await User.findOne({ where: { email } });
 };
 
 module.exports = User;

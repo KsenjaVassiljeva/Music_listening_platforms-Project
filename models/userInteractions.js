@@ -1,35 +1,41 @@
-const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/database'); // Путь к вашему файлу конфигурации базы данных
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database.js'); // Adjust this path if necessary
 
-class UserInteraction extends Model {}
-
-UserInteraction.init({
-  id: {
-    type: DataTypes.BIGINT,
-    autoIncrement: true,
-    primaryKey: true,
-  },
-  user_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  track_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  favorite: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-  },
-  played_at: {
-    type: DataTypes.DATE,
-    allowNull: true,
-  },
+const UserInteractions = sequelize.define('userInteractions', {
+    id: {
+        type: DataTypes.BIGINT,
+        autoIncrement: true,
+        primaryKey: true,
+    },
+    userId: {
+        type: DataTypes.BIGINT,
+        allowNull: false,
+        references: {
+            model: 'users', // Ensure the table name matches
+            key: 'id',
+        },
+    },
+    trackId: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
+        references: {
+            model: 'tracks', // Ensure the table name matches
+            key: 'id',
+        },
+    },
+    favorite: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+    },
+    playedAt: {
+        type: DataTypes.DATE,
+        allowNull: true, // Allow null if the track hasn't been played
+    }
 }, {
-  sequelize,
-  modelName: 'UserInteraction',
-  tableName: 'user_interactions', // Убедитесь, что это соответствует вашему имени таблицы в базе данных
-  timestamps: true, // Если вам нужны поля createdAt и updatedAt
+    tableName: 'userInteractions',
+    timestamps: true, // This automatically adds createdAt and updatedAt
 });
 
-module.exports = UserInteraction;
+// Export the model
+module.exports = UserInteractions;

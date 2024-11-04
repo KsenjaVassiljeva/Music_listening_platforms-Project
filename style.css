@@ -1,0 +1,120 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #eaeaea; /* Light background for contrast */
+}
+
+header {
+    background-color: #1a1a1a; /* Dark header for contrast */
+    color: #ffffff;
+    padding: 15px 20px;
+    text-align: center;
+}
+
+.logo {
+    font-size: 28px;
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 80px); /* Full height minus header/footer */
+    padding: 20px;
+}
+
+.form-container {
+    background-color: #ffffff; /* White background for form */
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    padding: 30px;
+    width: 100%;
+    max-width: 400px; /* Maximum width for the form */
+    text-align: center;
+    opacity: 0; /* Start invisible for fade-in effect */
+    transform: translateY(20px); /* Start slightly lower for the entrance effect */
+    animation: fadeIn 0.5s forwards; /* Fade-in animation */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333; /* Darker text for the heading */
+}
+
+.form-group {
+    margin-bottom: 20px; /* Spacing between form fields */
+    text-align: left; /* Align labels to the left */
+}
+
+label {
+    display: block; /* Label on new line */
+    margin-bottom: 5px;
+    font-weight: bold; /* Bold labels */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%; /* Full width inputs */
+    padding: 10px;
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 8px; /* Rounded corners */
+    font-size: 16px; /* Larger font size */
+    transition: border-color 0.3s; /* Smooth border color transition */
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: #f4c542; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+}
+
+button {
+    width: 100%; /* Full width button */
+    padding: 10px;
+    background-color: #f4c542; /* Bright button color */
+    border: none; /* No border */
+    border-radius: 8px; /* Rounded corners */
+    font-size: 16px;
+    color: #1a1a1a; /* Dark text color */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth background color transition */
+}
+
+button:hover {
+    background-color: #e6b735; /* Darker shade on hover */
+    transform: translateY(-3px); /* Bounce effect on hover */
+}
+
+p {
+    margin-top: 20px;
+    color: #666; /* Soft text color for additional info */
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #1a1a1a; /* Matching footer color */
+    color: #ffffff;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    font-size: 14px; /* Smaller font size for footer */
+}
